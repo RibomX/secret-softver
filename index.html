@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <link rel="icon" type="image/png" href="favicon2.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Softveri</title>
+  <link rel="icon" type="image/png" href="favicon2.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>softveri</title>
+  
+  <meta name="description" content="softveri. Sign in. Upload. A global index of tools shared by the community.">
+
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #fff; color: #111; min-height: 100vh; }
@@ -27,7 +31,7 @@
   .hero h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; }
   .hero h1 em { color: #6c63ff; font-style: normal; }
   .hero p { color: #777; font-size: 16px; margin-bottom: 28px; }
-   
+    
 /* VÝHRADNE OPRAVA SEARCH BARU */
   .search-wrap { 
     display: flex; 
@@ -67,7 +71,7 @@
     border-radius: 0; /* Tlačidlo presne sadne do orezaného obalu */
   }
   .search-wrap button:hover { background: #5a52e0; }
-   
+    
   .grid-section { padding: 12px 32px 60px; max-width: 1200px; margin: 0 auto; }
   .section-label { font-size: 12px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: #aaa; margin-bottom: 20px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
@@ -297,7 +301,7 @@ window.uploadSoftware = async function() {
     showToast('Invalid host! Only Google Drive, Mega, or Mediafire links are allowed.');
     return;
   }
-    
+     
   submitBtn.disabled = true;
   submitBtn.textContent = 'Indexing...';
 
@@ -336,7 +340,7 @@ window.uploadSoftware = async function() {
   document.getElementById('upDesc').value = '';
   document.getElementById('upUrl').value = '';
   document.getElementById('upFileName').value = '';
-    
+     
   showToast(`${name} indexed successfully!`);
   await loadSoftwareFromSupabase();
   submitBtn.disabled = false;
@@ -346,12 +350,12 @@ window.uploadSoftware = async function() {
 window.openDetail = function(id) {
   const sw = allSoftwareCached.find(s=>s.id===id); if (!sw) return;
   currentDetail = sw;
-    
+     
   const dIcon = document.getElementById('dIcon');
   dIcon.textContent = sw.name ? sw.name.slice(0,2).toUpperCase() : 'SW';
   dIcon.style.background = sw.color;
   dIcon.style.color = '#111';
-    
+     
   document.getElementById('dName').textContent = sw.name;
   document.getElementById('dMeta').textContent = `${sw.fileName} • ${sw.downloads || 0} clicks • by ${sw.author}`;
   document.getElementById('dDesc').textContent = sw.desc;
@@ -365,14 +369,14 @@ async function doDownload(sw) {
   sw.downloads = (sw.downloads || 0) + 1;
   const idx = allSoftwareCached.findIndex(s=>s.id===sw.id);
   if(idx >= 0) allSoftwareCached[idx] = sw;
-    
+     
   if (isDbOk && clientDb) {
     try {
       await clientDb.from('software').update({ downloads: sw.downloads }).eq('id', sw.id);
     } catch(e) {}
   }
   localStorage.setItem('sv_supabase_meta', JSON.stringify(allSoftwareCached));
-    
+     
   filterSoftware();
   window.open(sw.fileUrl, '_blank');
   showToast(`Redirecting to file host...`);
@@ -386,7 +390,7 @@ window.doLogin = async function() {
   const pass = document.getElementById('loginPass').value;
   const submitBtn = document.getElementById('loginSubmitBtn');
   if(!username || !pass) { showToast('Fill in fields'); return; }
-    
+     
   if (isDbOk && clientDb) {
     submitBtn.disabled = true;
     try {
@@ -403,7 +407,7 @@ window.doLogin = async function() {
     }
     submitBtn.disabled = false;
   }
-    
+     
   const u = { name: username };
   currentUser = u; 
   sessionStorage.setItem('sv_user', JSON.stringify(u));
@@ -415,20 +419,20 @@ window.doRegister = async function() {
   const pass = document.getElementById('regPass').value;
   const submitBtn = document.getElementById('registerSubmitBtn');
   if (!name || pass.length < 6) { showToast('Fill in form correctly (pass min 6 chars)'); return; }
-    
+     
   if (isDbOk && clientDb) {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Checking...';
     try {
       const { data, error } = await clientDb.from('users').select('username').eq('username', name);
-        
+         
       if (data && data.length > 0) {
         showToast('Username is already taken!');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Create account';
         return;
       }
-        
+         
       const { error: insertError } = await clientDb.from('users').insert([{ username: name, password: pass }]);
       if (insertError) {
         showToast('Registration failed, try again');
@@ -445,7 +449,7 @@ window.doRegister = async function() {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Create account';
   }
-    
+     
   const u = { name };
   currentUser = u; 
   sessionStorage.setItem('sv_user', JSON.stringify(u));
