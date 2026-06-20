@@ -14,9 +14,11 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #fff; color: #111; min-height: 100vh; }
-  nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 60px; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-bottom: 1px solid #f0f0f0; z-index: 100; }
-  .nav-logo { font-size: 18px; font-weight: 700; letter-spacing: -.5px; color: #111; }
-  .nav-logo span { color: #6c63ff; }
+  nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 75px; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-bottom: 1px solid #f0f0f0; z-index: 100; }
+  .nav-logo { display: flex; flex-direction: column; justify-content: center; }
+  .nav-logo-text { font-size: 18px; font-weight: 700; letter-spacing: -.5px; color: #111; line-height: 1.2; }
+  .nav-logo-text span { color: #6c63ff; }
+  .nav-logo-sub { font-size: 11px; color: #aaa; font-weight: 500; margin-top: 1px; }
   .nav-right { display: flex; gap: 10px; align-items: center; }
   .btn { padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all .15s; }
   .btn-ghost { background: transparent; color: #555; border: 1px solid #e0e0e0; }
@@ -29,7 +31,7 @@
   .avatar-menu a { padding: 8px 12px; border-radius: 6px; font-size: 14px; color: #333; text-decoration: none; cursor: pointer; text-align: left; }
   .avatar-menu a:hover { background: #f5f5f5; }
   .avatar-menu .sep { height: 1px; background: #f0f0f0; margin: 4px 0; }
-  .hero { padding: 120px 32px 48px; text-align: center; }
+  .hero { padding: 140px 32px 48px; text-align: center; }
   .hero h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 12px; }
   .hero h1 em { color: #6c63ff; font-style: normal; }
   .hero p { color: #777; font-size: 16px; margin-bottom: 28px; }
@@ -114,13 +116,16 @@
   .empty { text-align: center; padding: 60px 20px; color: #bbb; }
   .empty .e-icon { font-size: 32px; margin-bottom: 12px; font-weight: bold; }
   .empty p { font-size: 15px; }
-  @media(max-width:600px){ nav { padding: 0 16px; } .hero { padding: 100px 16px 32px; } .grid-section { padding: 8px 16px 40px; } }
+  @media(max-width:600px){ nav { padding: 0 16px; } .hero { padding: 120px 16px 32px; } .grid-section { padding: 8px 16px 40px; } }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">soft<span>veri</span></div>
+  <div class="nav-logo">
+    <div class="nav-logo-text">soft<span>veri</span></div>
+    <div class="nav-logo-sub">by RibomDev</div>
+  </div>
   <div class="nav-right" id="navRight">
     <button class="btn btn-ghost" onclick="openModal('authModal'); showLogin()">Sign in</button>
     <button class="btn btn-upload" onclick="checkUpload()">Upload</button>
@@ -129,7 +134,6 @@
 
 <div class="hero">
   <h1>Find the <em>software</em><br>you need</h1>
-  <div style="font-size: 14px; color: #aaa; margin-top: -4px; margin-bottom: 12px; font-weight: 500;">by RibomDev</div>
   <p>A global index of tools shared by the community</p>
   <div class="search-wrap">
     <input type="text" id="searchInput" placeholder="Search software..." oninput="filterSoftware()">
